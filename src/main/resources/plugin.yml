@@ -1,0 +1,10 @@
+name: deathcount
+description: $description
+version: '${version}'
+
+main: lol.bkd.deathcount.Deathcount
+api-version: '26.2'
+load: POSTWORLD
+
+authors: [ Lavender Persson ]
+website: https://bkd.lol
