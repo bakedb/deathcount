@@ -1,0 +1,5 @@
+name: Deathcount
+version: '1.0'
+main: lol.bkd.deathcount.Deathcount
+description:  A Minecraft Paper plugin that lets everyone know how bad at the game you are by showing how many times you have died.
+api-version: '26.1.2'
