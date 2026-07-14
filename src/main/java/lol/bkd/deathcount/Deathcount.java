@@ -18,21 +18,38 @@ public final class Deathcount extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
-        World world = Bukkit.getWorld("world");
     }
 
     public class DeathListener implements Listener {
         @EventHandler
         public void onDeath(PlayerDeathEvent event) {
+
+            boolean show_total_deathcount = true;
+
+            // Handle player death
             NamespacedKey deathcount = new NamespacedKey(Deathcount.this, "deathcount");
             Player player = event.getEntity();
             PersistentDataContainer pdc = player.getPersistentDataContainer();
             int current_deathcount = pdc.getOrDefault(deathcount, PersistentDataType.INTEGER, 0);
             current_deathcount++;
+
+            // Handle total deathcount for all players
+            World world = Bukkit.getWorld("world");
+            PersistentDataContainer pdcWorld = world.getPersistentDataContainer();
+            int world_deathcount = pdcWorld.getOrDefault(deathcount, PersistentDataType.INTEGER, 0);
+            world_deathcount++;
+
+            // Handle death message
             String death_message = event.getDeathMessage();
-            death_message = death_message + ". " + player.getName() + " has died " + current_deathcount + " times.";
+            if (show_total_deathcount) {
+                death_message = death_message + ". " + player.getName() + " has died " + current_deathcount + " times. The total deathcount for all players is " + world_deathcount + ".";
+            }
+            else {
+                death_message = death_message + ". " + player.getName() + " has died " + current_deathcount + " times.";
+            }
             event.setDeathMessage(death_message);
             pdc.set(deathcount, PersistentDataType.INTEGER, current_deathcount);
+            pdcWorld.set(deathcount, PersistentDataType.INTEGER, world_deathcount);
         }
     }
 }

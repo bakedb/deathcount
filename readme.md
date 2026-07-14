@@ -4,6 +4,5 @@ This Minecraft Paper plugin counts the amount of deaths that each player has, an
 
 ## TODO
 
-- Server-wide combined death count
 - Reset counts with commands
 - Configurable messages
