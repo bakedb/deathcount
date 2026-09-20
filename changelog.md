@@ -1,3 +1,6 @@
+# Release 1.1.1
+- Added support for versions from 26.1.1 to 26.3.
+
 # Release 1.1
 - Added 26.3 support.
 - Added config file (config version is now 1).
@@ -10,6 +13,6 @@
 
 <!-- Template:
 # Release <major>.<minor>.[hotfix]
-- Added [version] support
-- Config version is now [version]
+- Added [version] support.
+- Config version is now [version].
 -->
