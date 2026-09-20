@@ -1,0 +1,8 @@
+# Deathcount Configuration
+
+# Do not change this value unless you know what you are doing.
+config-version: 1
+
+# Append "The total deathcount for all players is [all player's death count]." to the chat's death message.
+# Note: this part of the message will not apply to the death screen as it will easily overflow off most screens.
+show-total-deathcount: false
