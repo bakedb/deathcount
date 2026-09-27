@@ -1,7 +1,6 @@
 package lol.bkd.deathcount;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -12,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.configuration.file.FileConfiguration;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 
@@ -23,7 +21,7 @@ public final class Deathcount extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
-        this.saveResource("config.yml", false);
+        this.saveDefaultConfig();
         this.registerCommand("setdeathcount", new SetDeathcount());
     }
 
@@ -41,15 +39,20 @@ public final class Deathcount extends JavaPlugin {
             current_deathcount++;
 
             // Handle total deathcount for all players
-            World world = Bukkit.getWorld("world");
+            World world = player.getWorld();
             PersistentDataContainer pdcWorld = world.getPersistentDataContainer();
             int world_deathcount = pdcWorld.getOrDefault(deathcount, PersistentDataType.INTEGER, 0);
             world_deathcount++;
 
             // Handle death message
-            Component death_message = event.deathMessage()
+            Component base_message = event.deathMessage();
+            if (base_message == null) {
+                base_message = Component.text(player.getName() + " has died");
+            }
+
+            Component death_message = base_message
                     .append(Component.text(". " + player.getName() + " has died " + current_deathcount + " times."));
-            Component extended_death_message = event.deathMessage()
+            Component extended_death_message = base_message
                     .append(Component.text(". " + player.getName() + " has died " + current_deathcount + " times. The total deathcount for all players is " + world_deathcount + "."));
             if (show_total_deathcount) {
                 event.deathMessage(extended_death_message);
@@ -93,11 +96,6 @@ public final class Deathcount extends JavaPlugin {
                 commandSourceStack.getSender().sendRichMessage("<red>You must provide a full number.");
                 return;
             }
-        }
-
-        @Override
-        public boolean canUse(CommandSender sender) {
-            return BasicCommand.super.canUse(sender);
         }
 
         @Override
