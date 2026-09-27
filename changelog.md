@@ -1,3 +1,7 @@
+# Release 1.1.2
+- Added a bare-bones Spigot build
+- Added compatibility for Paper 1.21.11+
+
 # Release 1.1.1
 - Added support for versions from 26.1.1 to 26.3.
 
